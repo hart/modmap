@@ -1,9 +1,7 @@
-import React, {Component} from 'react'
+const modules = {};
 
-export default class extends Component {
-  render() {
-    return <div>
-      <h2>Welcome to React components</h2>
-    </div>
-  }
-}
+export const set = (key, module) => modules[key] = module;
+export const get = key => modules[key];
+export const all = () => Object.assign({}, modules);
+
+export default get;

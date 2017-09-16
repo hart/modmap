@@ -1,23 +1,42 @@
-import expect from 'expect'
-import React from 'react'
-import {render, unmountComponentAtNode} from 'react-dom'
+import chai from 'chai'
+const should = chai.should();
 
-import Component from 'src/'
+import { default as modmap, get, all, set} from 'src/';
 
-describe('Component', () => {
-  let node
+describe('modules.js', function(){
+	const myModule = {
+		awesome: true,
+		status: "spectacular"
+	}
 
-  beforeEach(() => {
-    node = document.createElement('div')
-  })
+	describe('set', function(){
+		it('should not throw an error', function(){
+			set("Foos", myModule);
+		});
+	});
 
-  afterEach(() => {
-    unmountComponentAtNode(node)
-  })
+	describe('get', function(){
+		it('should return a value for a valid key', function(){
+			should.exist(get('Foos'));
+		});
 
-  it('displays a welcome message', () => {
-    render(<Component/>, node, () => {
-      expect(node.innerHTML).toContain('Welcome to React components')
-    })
-  })
-})
+		it('should return null for an invalid key', function(){
+			should.not.exist(get('FoosTwo'));
+		});
+
+		it('should return the correct object for a key', function(){
+			get('Foos').should.equal(myModule);
+		});
+	});
+
+	describe('all', function(){
+		it('should return an object of objects', function(){
+			should.exist(all());
+			all().should.be.a('object');
+			
+			should.exist(all().Foos);
+			all().Foos.should.be.a('object');
+			all().Foos.should.equal(myModule);
+		});
+	});
+});
