@@ -3,7 +3,7 @@ const should = chai.should();
 
 import { default as modmap, get, all, set} from 'src/';
 
-describe('modules.js', function(){
+describe('modmap', function(){
 	const myModule = {
 		awesome: true,
 		status: "spectacular"
@@ -16,6 +16,10 @@ describe('modules.js', function(){
 	});
 
 	describe('get', function(){
+		it('should equal the default export', function(){
+			get.should.equal(modmap);
+		});
+
 		it('should return a value for a valid key', function(){
 			should.exist(get('Foos'));
 		});
@@ -24,19 +28,19 @@ describe('modules.js', function(){
 			should.not.exist(get('FoosTwo'));
 		});
 
-		it('should return the correct object for a key', function(){
+		it('should return the correct value for a key', function(){
 			get('Foos').should.equal(myModule);
 		});
 	});
 
 	describe('all', function(){
-		it('should return an object of objects', function(){
-			should.exist(all());
-			all().should.be.a('object');
+		it('should return an object of key/values', function(){
+			const allValues = all();
+			should.exist(allValues);
+			allValues.should.be.a('object');
 			
-			should.exist(all().Foos);
-			all().Foos.should.be.a('object');
-			all().Foos.should.equal(myModule);
+			should.exist(allValues.Foos);
+			allValues.Foos.should.equal(myModule);
 		});
 	});
 });
