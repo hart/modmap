@@ -1,6 +1,6 @@
 {
   "name": "modmap",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "modmap: easy access key/value store with tags",
   "main": "lib/index.js",
   "module": "es/index.js",
